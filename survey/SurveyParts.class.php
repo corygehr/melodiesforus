@@ -25,15 +25,21 @@ class SurveyParts {
 		));
 		$demoPre = 'Please answer the following demographic questions.';
 
-		$mturkQuestion = array();
+		$mturkConditional = array();
 
 		if(USE_MTURK)
 		{
-			$mturkQuestion['post_mturk_id'] = array('label' => "What is your Mechanical Turk ID?");
+			$mturkConditional['post_mturk_id'] = array('label' => "What is your Mechanical Turk ID?");
+		}
+		else
+		{
+			// Not allowed to ask for names in MTURK
+			$mturkConditional['post_first_name'] = array('label' => "What is your first name?");
+			$mturkConditional['post_last_name'] = array('label' => "What is your last name?");
 		}
 
 		$demo = array('pre' => $demoPre, 'title' => 'Survey',
-		'data' => $mturkQuestion + array(
+		'data' => $mturkConditional + array(
 			'post_age' => array('label' => 'What is your age (in years)?'),
 			'post_gender' => array('label' => 'What is your gender?', 'type' => 'radio', 'options' => array('Male', 'Female', 'Decline to answer')),
 			'post_education' => array('label' => 'What is the highest level of education that you have completed?', 'type' => 'radio', 'options' => array('Some high school', 'High school', 'Some college', 'Two year college degree', 'Four year college degree', 'Graduate or professional degree')),
