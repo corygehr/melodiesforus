@@ -11,7 +11,7 @@ function db_connect() {
 	if($db) return $db; //if a db connection exists, don't get another one
 
 	try {
-		$db = new PDO('mysql:host=localhost;dbname=negative_options', DB_USERNAME, DB_PASSWORD);
+		$db = new PDO('mysql:host=localhost;dbname=psuEyeTStore', DB_USERNAME, DB_PASSWORD);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	catch(PDOException $e) {
