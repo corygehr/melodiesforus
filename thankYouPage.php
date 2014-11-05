@@ -53,7 +53,32 @@ include_once('redirector.php');
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit" style=''>
         <h2 style='text-align:center'>Thank you!</h2>
-        <p>Thank you for taking part in this task. You may now close this window. Please remember to submit the HIT. You may leave comments about this task when you submit the HIT. You will receive your participation fee and your bonus payment according to your decisions in this task.</p>
+<?php
+  if(USE_MTURK)
+  {
+      $message = "Thank you for taking part in this task. You may now close this window. Please remember to submit the HIT. You may leave comments about this task when you submit the HIT. You will receive your participation fee and your bonus payment according to your decisions in this task.";
+  }
+  else
+  {
+      $message = "Thank you for taking part in this task. You may click the 'End' button below to reset the environment.";
+  }
+?>
+        <p><?php echo $message; ?></p>
+
+<?php
+  // Allow resetting of environment if not using MTURK
+  if(!USE_MTURK)
+  {
+?>
+<form name='resetenv' id='resetenv' method='POST'>
+<input type='hidden' name='phase' value='resetEnv' />
+<input type='submit' value='End' />
+</fieldset>
+</form>
+<?php
+  }
+?>
+
       </div>
 
     </div> <!-- /container -->

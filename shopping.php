@@ -205,8 +205,15 @@ $warning_msg = $treatment['warning_msg'];
 
 					<form id='purchaseForm' action='purchase.php' method='POST'>
 					<div>
+<?php
+	// Ask for mturk id if we're using it
+	if(USE_MTURK == true)
+	{
+		echo "
 						<input type='text' required placeholder='Mechanical Turk ID' name='pre_mturk_id' />
-						<br/>
+						<br/>";
+	}
+?>
 						<input type='text' required placeholder='Age' name='pre_age' />
 						<br/>
 						<input type='text' required placeholder='Zip Code' name='pre_zip' />

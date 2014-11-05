@@ -22,6 +22,17 @@ if(!EXPERIMENT_OPEN && !$override) {
 
 include_once('functions.php');
 
+// Check for the user asking to reset the environment
+if(isset($_POST['phase']) && $_POST['phase'] == 'resetEnv')
+{
+	// Clear cookie and redirect to start
+	unset($_COOKIE['sid']);
+	setcookie('sid', null, -1, '/');
+
+	header('Location: /');
+	exit();
+}
+
 
 if(has_finished(-1)) {
 	redir("thankYouPage.php");

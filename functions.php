@@ -62,11 +62,14 @@ function get_new_treatment() {
 function enter_new_session($param_hitId, $param_workerId) {
    $db = db_connect();
 
-   if(has_finished_by_ip() || 
-		(has_finished_by_mturk_id($param_workerId) && $param_workerId !='test_mturk_id'))
-		return 0;
-
-
+   // If using MTURK, check for previous entry
+   // Otherwise we're probably going off of a local environment
+   if(USE_MTURK)
+   {
+	   if(has_finished_by_ip() || 
+			(has_finished_by_mturk_id($param_workerId) && $param_workerId !='test_mturk_id'))
+			return 0;
+	}
 
    $sql = 'INSERT INTO session(ip, param_hitId, param_workerId, treatment_id) VALUES(?,?,?,?)';
 
@@ -279,21 +282,30 @@ function has_finished_by_mturk_id($mturk_id) {
 }                                      
 
 function has_finished_by_ip() {
-	$db = db_connect();
 
-	$ip = get_ip();
-	$sql = "SELECT id, post_info FROM session WHERE ip = '$ip'";
+	// If we're in a lab, we don't care about the IP
+	if(USE_MTURK)
+	{
+		$db = db_connect();
 
-   $data = runQuery($db, $sql, true);
+		$ip = get_ip();
+		$sql = "SELECT id, post_info FROM session WHERE ip = '$ip'";
 
-   if(count($data) > 0) { //we have a session
-		$session = $data[0];
-		if($session['post_info']) {
-      	return true;
+	   $data = runQuery($db, $sql, true);
+
+	   if(count($data) > 0) { //we have a session
+			$session = $data[0];
+			if($session['post_info']) {
+	      	return true;
+			}
 		}
-	}
 
-	return false;
+		return false;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 function has_finished_by_sid($sid) {
@@ -306,7 +318,7 @@ function has_finished_by_sid($sid) {
    if(count($data) > 0) { //we have a session
 		$session = $data[0];
 		if($session['post_info']) {
-      	return true;
+      		return true;
 		}
 	}
 

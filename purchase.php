@@ -8,7 +8,14 @@ $sid = intval($_COOKIE['sid']);
 
 if(array_key_exists('pre_email', $_REQUEST)) {
 	$email = htmlentities($_REQUEST['pre_email'], ENT_QUOTES);
-	$mturk_id = htmlentities($_REQUEST['pre_mturk_id'], ENT_QUOTES);
+	if(USE_MTURK)
+	{
+		$mturk_id = htmlentities($_REQUEST['pre_mturk_id'], ENT_QUOTES);
+	}
+	else
+	{
+		$mturk_id = false;
+	}
 	$age = intval($_REQUEST['pre_age']);
 	$songId = intval($_REQUEST['songId']);
 	$zip = ''.intval($_REQUEST['pre_zip']);

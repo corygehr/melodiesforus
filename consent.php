@@ -5,46 +5,52 @@
 include_once('functions.php');
 
 if(!curr_session_is_valid()) {
-	$hitId = '';
-	$workerId = '';
+	$hitId = time() . rand();
+	$workerId = time() . rand();
 	$treatmentId = 0;
   
-	if(array_key_exists('override', $_REQUEST)) {
-		$hitId = 'testing_hit_id';
-		$workerId = 'test_mturk_id';
+  	// Force users to come from MTurk (or override)
+  	if(USE_MTURK)
+  	{
+		if(array_key_exists('override', $_REQUEST)) {
+			$hitId = 'testing_hit_id';
+			$workerId = 'test_mturk_id';
 
-		if(array_key_exists('treatmentId', $_REQUEST)) {
-			$treatmentId = intval($_REQUEST['treatmentId']);
+			if(array_key_exists('treatmentId', $_REQUEST)) {
+				$treatmentId = intval($_REQUEST['treatmentId']);
+			}
 		}
-	} 
 
-	if(array_key_exists('hitId', $_REQUEST)) {
-		$hitId = $_REQUEST['hitId'];
+		if(array_key_exists('hitId', $_REQUEST)) {
+			$hitId = $_REQUEST['hitId'];
+		}
+
+		if(array_key_exists('workerId', $_REQUEST)) {
+			$workerId = $_REQUEST['workerId'];
+		}                                 
+
+		//if($hitId && $workerId) 
+		if ($workerId)
+		{
+			$sid = enter_new_session($hitId, $workerId);
+			if($treatmentId > 0) 
+			{
+				edit_session(array('treatment_id'=>$treatmentId), false, 'override');
+			}
+
+			if(!$sid) 
+			{
+	      		die("You have already completed a task on this site. You may not participate multiple times. Sorry for the inconvenience.");
+			}
+		}
+		else {
+			die("This page can only be accessed through the Mechanical Turk HIT. Please accept the task and click the link to this page from there.");
+		}
 	}
-
-	if(array_key_exists('workerId', $_REQUEST)) {
-		$workerId = $_REQUEST['workerId'];
-	}                                 
-
-
-       
-
-	//if($hitId && $workerId) 
-	if ($workerId)
+	else
 	{
+		// Create new local session
 		$sid = enter_new_session($hitId, $workerId);
-		if($treatmentId > 0) 
-		{
-			edit_session(array('treatment_id'=>$treatmentId), false, 'override');
-		}
-
-		if(!$sid) 
-		{
-      			die("You have already completed a task on this site. You may not participate multiple times. Sorry for the inconvenience.");
-		}
-	}
-	else {
-		die("This page can only be accessed through the Mechanical Turk HIT. Please accept the task and click the link to this page from there.");
 	}
 }
 

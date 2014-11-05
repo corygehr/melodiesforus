@@ -12,7 +12,6 @@ if(array_key_exists('prevPage', $_REQUEST) && $_REQUEST['prevPage'] == 'survey')
 
 
 $sid = intval($_COOKIE['sid']); //for security
-
 $email_sent = false;
 
 if(array_key_exists('sendEmail', $_GET)) {
@@ -38,6 +37,8 @@ if(array_key_exists('post_email', $_REQUEST)) {
 }          
 
 function sendEmail() {
+	global $sid;
+
 	$to = getEmailForCurrentSession(); //from functions.php
 
 	if($to == 'undef') {
