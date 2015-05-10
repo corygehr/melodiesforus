@@ -150,7 +150,7 @@ function next(yesno) {
          
 
 <p> 
-	<strong style="line-height: 1.3em;"><span style="font-size: xx-large;">Thank you! <span style="font-size: small;">MelodiesFor.us has processed your order.</span></span> </strong>
+	<strong style="line-height: 1.3em;"><span style="font-size: xx-large;">Thank you! <span style="font-size: small;">WebMed.ia has processed your order.</span></span> </strong>
 </p>
 <table style="width: 1042px; height: 170px;">
 <tr>
@@ -263,7 +263,7 @@ function next(yesno) {
       	$pre_text = 'You have been subscribed to the SafeDelivery service.';
 			$button_text = 'No thanks';
 		}
-		echo "<p>".$pre_text." Simply ".$start_text."click \"$button_text\" to use our services and to take advantage of the great value that SafeDelivery provides. By clicking \"$button_text\" you will receive a safe email copy of the identical song you selected in the MelodiesFor.us store for just $0.50. This is a 50% DISCOUNT for the additional copy. You will SAVE an incredible $0.50 on this purchase. When you agree to use SafeDelivery you will receive your MelodiesFor.us selection delivered in a timely manner by email to your account. Your emailed backup copy of the song will help you to have continued access to your song in case of data loss or when you are using different computers. Alternative offers will not give you the same satisfaction or the same $0.50 DISCOUNT. Because of this special reduced offer price we cannot offer any refunds. We always strive to serve our customers to provide them with the quickest and most reliable mode of music delivery. Our customers have the highest degree of satisfaction with SafeDelivery and we invite you to try our offer.</p>";
+		echo "<p>".$pre_text." Simply ".$start_text."click \"$button_text\" to use our services and to take advantage of the great value that SafeDelivery provides. By clicking \"$button_text\" you will receive a safe email copy of the identical song you selected in the WebMed.ia store for just $0.50. This is a 50% DISCOUNT for the additional copy. You will SAVE an incredible $0.50 on this purchase. When you agree to use SafeDelivery you will receive your WebMed.ia selection delivered in a timely manner by email to your account. Your emailed backup copy of the song will help you to have continued access to your song in case of data loss or when you are using different computers. Alternative offers will not give you the same satisfaction or the same $0.50 DISCOUNT. Because of this special reduced offer price we cannot offer any refunds. We always strive to serve our customers to provide them with the quickest and most reliable mode of music delivery. Our customers have the highest degree of satisfaction with SafeDelivery and we invite you to try our offer.</p>";
 
 	?>
 </td>

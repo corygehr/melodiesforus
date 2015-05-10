@@ -89,7 +89,7 @@ $warning_msg = $treatment['warning_msg'];
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <span style='font-weight:bold;color:black' class="brand">MelodiesFor.us</span>
+          <span style='font-weight:bold;color:black' class="brand">WebMed.ia</span>
         </div>
       </div>
     </div>

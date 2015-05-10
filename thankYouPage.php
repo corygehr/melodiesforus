@@ -9,7 +9,7 @@ include_once('redirector.php');
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>MelodiesFor.us</title>
+    <title>WebMed.ia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -43,7 +43,7 @@ include_once('redirector.php');
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <span style='font-weight:bold;color:black' class="brand">MelodiesFor.us</span>
+          <span style='font-weight:bold;color:black' class="brand">WebMed.ia</span>
         </div>
       </div>
     </div>
