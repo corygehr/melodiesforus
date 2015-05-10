@@ -51,7 +51,6 @@ class SurveyParts {
 
 		$shopping =  array('title'=>'Shopping questions',
 		'data'=>array(
-			'shopping_whichSong' => array('label' => 'Which song did you purchase?', 'type' => 'select', 'options' => $this->getSongs(),'numbered'=>true),
 			'shopping_oftenPurchase' => array('label' => 'How often do you purchase music online?', 'type' => 'select', 'options' => $times),
 			'shopping_spendPerMonth'=> array('label'=> 'How much do you spend on average per month on music purchases? $'),
 			'shopping_oftenStreaming' => array('label' => 'How often do you stream music online?', 'type' => 'select', 'options' => $times),
@@ -97,7 +96,7 @@ class SurveyParts {
 			'safeDelivery_howValuableService' => array('label' => 'How valuable is the SafeDelivery service to you?', 'type' => 'likert', 'size' => 5, 'left'=>'Not valuable', 'right'=>'Very valuable'),
 			'safeDelivery_howValuableService_expl'=> array('label'=> 'Why did you choose the above rating?', 'type'=>'textarea'),
 			'safeDelivery_howValuableDiscount' => array('label' => 'How valuable is the discount offered by the SafeDelivery service to you?', 'type' => 'likert', 'size' => 5, 'left'=>'Not valuable', 'right'=>'Very valuable'),
-			'safeDelivery_relationship' => array('label' => 'What is the relationship between MelodiesFor.us and SafeDelivery?', 'type' => 'radio', 'options' => array('MelodiesFor.us and SafeDelivery are the same site.','MelodiesFor.us and SafeDelivery are partners.','MelodiesFor.us and SafeDelivery are unrelated.','I do not know what the relationship between MelodiesFor.us and SafeDelivery is.')),
+			'safeDelivery_relationship' => array('label' => 'What is the relationship between WebMed.ia and SafeDelivery?', 'type' => 'radio', 'options' => array('WebMed.ia and SafeDelivery are the same site.','WebMed.ia and SafeDelivery are partners.','WebMed.ia and SafeDelivery are unrelated.','I do not know what the relationship between WebMed.ia and SafeDelivery is.')),
 		));                                                              
 
 		$this->addComponents($demo);

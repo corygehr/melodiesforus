@@ -139,7 +139,16 @@ function next(yesno) {
 
 
 <!-- use this iframe to start the download -->
-<iframe width=1 height=1 style='display:none' src='songs/<?php echo $songId; ?>.zip'></iframe>
+<?php
+	$paths = get_media_path($songId);
+
+	$mediaPath = "";
+
+	if($paths) {
+		$mediaPath = $paths[0]["zip_path"];
+	}
+?>
+<iframe width=1 height=1 style='display:none' src='<?php echo $mediaPath; ?>'></iframe>
 
 
   <body>

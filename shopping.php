@@ -100,68 +100,64 @@ $warning_msg = $treatment['warning_msg'];
 
       <div style='margin-left:-10px;margin-top:-5px' class='row'>
 
-		<?php
-
-      $songstring = file_get_contents('songs/song_info.txt', true);
-		$genres = array();
-		$songs = array();
-		$artists = array();
-		$song_artists = array();
-      foreach(explode("\n",$songstring) as $line) {
-			$split = explode(":", $line);
-			$genres[] = $split[0];
-         if(count($split)>1){
-				$song_artist = explode(" by ",trim($split[1]));
-				$songs[] = $song_artist[0];
-				$artists[] = $song_artist[1];
-			}
-		}
-
-		?>
-
       <div id='bigGroup' class='span13' style='margin-right:-10px'>
 
       <div class="row">
-		  
-		  <?php 
 
-		  for($i=1;$i<=6;$i++) { 
-			 if($i>1 && ($i-1)%2 == 0) {
-			 	echo "</div><div class='row'>";   
-			 }
+<?php 
+		$requestedType = 1;
 
-			 $j=$i-1;
+		$media = get_media_by_type($requestedType);
 
-			  ?>
+		if($media) {
+
+			$count=1;
+
+			foreach($media as $m) { 
+
+				if($count>1 && ($count-1)%2 == 0) {
+		  			echo "</div><div class='row'>";
+		  		}
+?>
 		  
 		  
 		  <div class="span4" style='padding-top:5px;padding-bottom:10px;padding-left:5px;'>
-          <h3 style='margin-top:-13px;'><?php echo $songs[$j]; ?></h3>
-			 <h4 style='margin-top:-8px;'><i> by <?php echo $artists[$j]; ?></i>
-			   <span style='font-size:12px'>(<?php echo $genres[$j]; ?>)</span>
+          <h3 style='margin-top:-13px;'><?php echo $m['name']; ?></h3>
+			 <h4 style='margin-top:-8px;'><i> by <?php echo $m['author']; ?></i>
+			   <span style='font-size:12px'>(<?php echo $m['genre']; ?>)</span>
 				</h4>
 
-				<h6 style='display:none;' class='hiddenMediaArtist'><?php echo $songs[$j]."<br> by ".$artists[$j]; ?></h6>
-				<h6 style='display:none' class='hiddenMediaId'><?php echo $i; ?></h6>
+				<h6 style='display:none;' class='hiddenMediaArtist'><?php echo $m['name']."<br> by ".$m['author']; ?></h6>
+				<h6 style='display:none' class='hiddenMediaId'><?php echo $m['id']; ?></h6>
 					<div>
-						<?php echo "<img style='float:left' src='./songs/song$i"."_cover.jpg' width=100 height=100 />";  ?>
+						<?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=100 height=100 />";  ?>
 					</div>
-					
-					<object style='float:right' onmousedown='logEvent("player<?php echo $i;?>","click", true)' data="dewplayer-mini.swf" width="160" height="20" name="dewplayer" id="dewplayer" type="application/x-shockwave-flash">
-					
-					<param name="movie" value="dewplayer-mini.swf" />
+					<p>
 					<?php
-						echo "<param name='flashvars' value='mp3=songs/".$i.".mp3' />";
+						switch($m['media_type'])
+						{
+							case 1:
+								echo "<audio onmousedown='logEvent(\"player".$m['id']."\",\"click\", true)' style='float:right' src='" . $m['path'] . "' controls preload></audio>";
+							break;
+
+							case 2:
+								echo "<video onmousedown='logEvent(\"player".$m['id'].",\"click\", true)' style='float:right' src='" . $m['path'] . "' width='100' height='100' controls></video>";
+							break;
+
+							case 3:
+								echo "{$m['description']}";
+							break;
+						}
 					?>
-					<param name="wmode" value="transparent" />
-					</object>
+					</p>
 					<br/>
-          <a class="btn addToCart" style='margin-top:20px;float:right' id='addToCartBtn<?php echo $i; ?>'href="#">Add to cart ($0.99) &raquo;</a>
+          <a class="btn addToCart" style='margin-top:20px;float:right' id='addToCartBtn<?php echo $m['id']; ?>'href="#">Add to cart ($0.99) &raquo;</a>
         </div>
 		  
-		  <?php   
-
-		  }
+		  <?php
+		  		$count++;
+			}
+		}
 		  
 		  ?>
 		</div> <!--last media block -->

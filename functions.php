@@ -24,6 +24,19 @@ function get_ip() {
 	return $_SERVER['REMOTE_ADDR'];
 }
 
+function get_media_path($id) {
+	$db = db_connect();
+	$q = "SELECT path, zip_path, cover_path
+		  FROM media 
+		  WHERE id = $id 
+		  LIMIT 1";
+	return runQuery($db, $q, true);
+}
+
+function get_server_url() {
+	return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . '/';
+}
+
 function runQuery($db, $q, $return = true) {
    try {
       $results = $db->query($q);
@@ -39,7 +52,12 @@ function runQuery($db, $q, $return = true) {
 }
 
 function get_media_by_type($typeId = 1) {
-	$q = "SELECT * FROM media WHERE type = $typeId ORDER BY id";
+	$db = db_connect();
+	$q = "SELECT id, media_type, path, zip_path, cover_path, genre, name, author, description 
+		  FROM media 
+		  WHERE media_type = $typeId 
+		  ORDER BY id";
+
 	return runQuery($db, $q, true);
 }
 
