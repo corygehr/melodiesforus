@@ -38,6 +38,11 @@ function runQuery($db, $q, $return = true) {
    }
 }
 
+function get_media_by_type($typeId = 1) {
+	$q = "SELECT * FROM media WHERE type = $typeId ORDER BY id";
+	return runQuery($db, $q, true);
+}
+
 function get_new_treatment() {
 	$db = db_connect();
 	$tt = 'treatment';

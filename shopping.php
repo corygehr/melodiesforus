@@ -28,8 +28,8 @@ $warning_msg = $treatment['warning_msg'];
 	 <script>
 	 $(document).ready(function() {
 		 $('.addToCart').click(function(e) {
-			 var song = $(this).closest("div").find(".hiddenSongArtist").html();
-			 var songId = $(this).closest("div").find(".hiddenSongId").text();
+			 var song = $(this).closest("div").find(".hiddenMediaArtist").html();
+			 var songId = $(this).closest("div").find(".hiddenMediaId").text();
 			 $('#cart').html(song+": $0.99");
 			 $('#songId').val(songId);
 		 });
@@ -63,7 +63,7 @@ $warning_msg = $treatment['warning_msg'];
 		#warningSpan {
 			display:none;
 		}
-		#cartSongArea {
+		#cartMediaArea {
 			height: 100px;
          max-width:170px;
 			padding: 10px; 
@@ -141,8 +141,8 @@ $warning_msg = $treatment['warning_msg'];
 			   <span style='font-size:12px'>(<?php echo $genres[$j]; ?>)</span>
 				</h4>
 
-				<h6 style='display:none;' class='hiddenSongArtist'><?php echo $songs[$j]."<br> by ".$artists[$j]; ?></h6>
-				<h6 style='display:none' class='hiddenSongId'><?php echo $i; ?></h6>
+				<h6 style='display:none;' class='hiddenMediaArtist'><?php echo $songs[$j]."<br> by ".$artists[$j]; ?></h6>
+				<h6 style='display:none' class='hiddenMediaId'><?php echo $i; ?></h6>
 					<div>
 						<?php echo "<img style='float:left' src='./songs/song$i"."_cover.jpg' width=100 height=100 />";  ?>
 					</div>
@@ -164,7 +164,7 @@ $warning_msg = $treatment['warning_msg'];
 		  }
 		  
 		  ?>
-		</div> <!--last song block -->
+		</div> <!--last media block -->
 
 		<script>
 			$(document).ready(function(){
@@ -225,7 +225,7 @@ $warning_msg = $treatment['warning_msg'];
 
 					<br/><br/>
 					
-					<p>Once you confirm your purchase, the <b>download</b> of the song will be initiated. For you convenience, you will receive a compressed zip file with the song.</p>
+					<p>Once you confirm your purchase, the <b>download</b> of the media will be initiated. For your convenience, you will receive a compressed zip file with the media.</p>
 					<br/>
 
 			 
@@ -246,7 +246,7 @@ $warning_msg = $treatment['warning_msg'];
 			<div class='row'>
 				<div id='cartSpan' class='span3'>
 					<div class='row'>
-						<div class="span3" id='cartSongArea'>
+						<div class="span3" id='cartMediaArea'>
 							<h3 style='margin-top:-20px;margin-left:-10px'>Cart:</h3>
 							<p id='cart'></p> <!-- This is where the song goes -->
 						</div>
@@ -281,7 +281,7 @@ $warning_msg = $treatment['warning_msg'];
 		 function doPurchase() {
 			 var cart = $('#cart').html();
 			 if(cart == '') {
-          	alert('You must add a song to your cart.');
+          	alert('You must add an item to your cart.');
 				return false;
 			 }
 			 logEvent('purchaseBtn', 'click+success', true);
