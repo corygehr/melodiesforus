@@ -101,7 +101,7 @@ function enter_new_session($param_hitId, $param_workerId) {
 	$group = $result[0]['value'];
 
 	// Now get the first treatment ID for that group
-	$q = "SELECT id FROM treatments WHERE group = $group AND sequence = 1 LIMIT 1";
+	$q = "SELECT id FROM treatment WHERE group_num = $group AND sequence = 1 LIMIT 1";
 	$result = runQuery($db, $q, true);
 
 	$treatmentId = $result[0]['id'];
