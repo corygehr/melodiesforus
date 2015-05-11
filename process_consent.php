@@ -9,4 +9,3 @@ if(array_key_exists('consent', $_GET) && $_GET['consent'] == 'yes') {
 else {
 	redir('consent.php');
 }
-

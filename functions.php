@@ -94,10 +94,23 @@ function enter_new_session($param_hitId, $param_workerId) {
 			return 0;
 	}
 
-   $sql = 'INSERT INTO session(ip, param_hitId, param_workerId, treatment_id) VALUES(?,?,?,?)';
+	// Get the desired group number
+	$q = "SELECT value FROM settings WHERE name = 'CURRENT_GROUP' LIMIT 1";
+	$result = runQuery($db, $q, true);
 
-   $prep = $db->prepare($sql);
-   $prep->execute(array(get_ip(),$param_hitId, $param_workerId, get_new_treatment()));
+	$group = $result[0]['value'];
+
+	// Now get the first treatment ID for that group
+	$q = "SELECT id FROM treatments WHERE group = $group AND sequence = 1 LIMIT 1";
+	$result = runQuery($db, $q, true);
+
+	$treatmentId = $result[0]['id'];
+
+
+	$sql = 'INSERT INTO session(ip, param_hitId, param_workerId, treatment_id, transaction, group_num) VALUES(?,?,?,?,?,?)';
+
+	$prep = $db->prepare($sql);
+	$prep->execute(array(get_ip(),$param_hitId, $param_workerId, $treatmentId, 1, $group));
 
    $sid = $db->lastInsertId();
    setcookie('sid', $sid, time()+60*60*24*30, '/');
@@ -334,19 +347,19 @@ function has_finished_by_ip() {
 function has_finished_by_sid($sid) {
 	$db = db_connect();
 
-	$sql = "SELECT id, post_info FROM session WHERE id = '$sid' ORDER by id DESC LIMIT 1";
+	$sql = "SELECT id, post_info, transaction FROM session WHERE id = '$sid' ORDER by id DESC LIMIT 1";
 
    $data = runQuery($db, $sql, true);
 
    if(count($data) > 0) { //we have a session
 		$session = $data[0];
-		if($session['post_info']) {
+		if($session['post_info'] && $session['transaction'] >= 12) {
       		return true;
 		}
 	}
 
 	return false;
-}   
+}
 
 function get_last_page($sid) {
 	$db = db_connect();

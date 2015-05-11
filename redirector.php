@@ -51,7 +51,7 @@ else {
 
 			if(!has_done_presurvey($sid)) {
 				if("intro.php" != basename($_SERVER["SCRIPT_FILENAME"]))
-         	redir("shopping.php");
+         			redir("shopping.php");
 			}
 			else {
 				if(!has_seen_negative_option($sid)) { //pre survey done
@@ -61,9 +61,9 @@ else {
 				else {
 					if(has_finished($sid)) {
 						redir("thankYouPage.php");
-					}                      
+					}        
 					else {
-                	redir('endSurvey.php');
+                		redir('endSurvey.php');
 					}
 				}
 			}

@@ -1,0 +1,21 @@
+Title of Project:             Music purchasing study
+
+Principal Investigator:	Alan Nochenson / 309 IST Building / University Park, PA 16802 / anochenson@psu.edu
+ 
+Advisor:	Jens Grossklags / 329A IST Building / University Park, PA 16802 / jensg@ist.psu.edu
+
+Purpose of the Study:  We aim to study music purchasing behaviors.
+
+Procedures to be followed:  To complete this study, you will be given $1.50 with which you have to purchase the single song from a music store. In the store, you may sample the songs and interact with the shopping environment. Afterwards, you will fill out a survey questionnaire.
+
+Duration/Time: The whole process should take you about 10-15 minutes on average.
+
+Statement of Confidentiality: Your participation in this research is confidential. In the event of a publication or presentation resulting from the research, no personally identifiable information will be shared.
+
+Right to Ask Questions: Please contact Alan Nochenson at anochenson@psu.edu with questions or concerns about this study.
+
+Payment for participation: For this study, we have given to you (in addition to the participation reward) a starting budget of $1.50. Using this budget, you have to purchase exactly one song in the music store. Any transaction in the shopping environment reduces your starting budget as described in the shopping environment. At the end of the study, you will receive any remaining money as a bonus payment.
+
+Voluntary Participation: Your decision to take part in this research is voluntary. You can stop at any time. You do not have to answer any questions you do not want to answer. If this is the case, please abandon the Mechanical Turk HIT and exit the task.
+
+You must be 18 years of age or older to consent to take part in this research study.  If you agree to take part in this research study and to the conditions outlined above, please click the button below. If you do not consent, please exit the survey now and abandon the Mechanical Turk HIT.

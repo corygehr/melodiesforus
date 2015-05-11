@@ -75,7 +75,9 @@ include_once('redirector.php');
     return results[1];
  }
 </script>
-
+<?php
+	if(CONSENT_SHOW) {
+?>
 <div style="width:800px">
 <p><strong>Title of Project:</strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Music purchasing study</p>
 
@@ -113,7 +115,19 @@ include_once('redirector.php');
 
 
 <a id='beginBtn' class='btn btn-primary btn-small' href='./process_consent.php?consent=yes'>I agree to the above terms</a>
-
+<?php
+	}
+	else {
+?>
+<p>
+	Click 'Start' to begin a new session.
+</p>
+<p>
+	<a id='beginBtn' class='btn btn-primary btn-small' href='./process_consent.php?consent=yes'>Start</a>
+</p>
+<?php
+	}
+?>
 <script src="./assets/js/bootstrap-transition.js"></script>
 <script src="./assets/js/bootstrap-alert.js"></script>
 <script src="./assets/js/bootstrap-modal.js"></script>
@@ -126,4 +140,3 @@ include_once('redirector.php');
 <script src="./assets/js/bootstrap-collapse.js"></script>
 <script src="./assets/js/bootstrap-carousel.js"></script>
 <script src="./assets/js/bootstrap-typeahead.js"></script>
-

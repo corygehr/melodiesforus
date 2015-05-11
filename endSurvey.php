@@ -17,7 +17,7 @@ $email_sent = false;
 if(array_key_exists('sendEmail', $_GET)) {
 	$wantsEmail = ($_REQUEST['sendEmail'] != 'false');
 	if($wantsEmail) { 
-		sendEmail();
+		//sendEmail(); Cannot send these
 	}
 }
 if(array_key_exists('post_email', $_REQUEST)) {
@@ -86,6 +86,9 @@ include_once('redirector.php');
     </div>
 
     <div class="container" style='margin-top:50px'>
+    	<p>
+    		You have completed the final transaction! Please complete the survey below to finish.
+    	</p>
  		<div class='row'>
 			<div class='span8'>
  

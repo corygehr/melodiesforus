@@ -19,3 +19,4 @@ define('SAFEDELIVERY_PWD',"mturk12345");
 
 define('EXPERIMENT_OPEN',1);
 
+define('CONSENT_SHOW', 0);

@@ -20,13 +20,13 @@ if(array_key_exists('pre_email', $_REQUEST)) {
 	$songId = intval($_REQUEST['songId']);
 	$zip = ''.intval($_REQUEST['pre_zip']);
 	edit_session(array('pre_email'=>$email, 'sid'=>$sid, 'pre_zip'=>$zip, 'pre_mturk_id'=>$mturk_id,'pre_age'=>$age, 'songId'=>intval($_REQUEST['songId'])), false, 'pre');
-
 }
 else {
 	$email = get_from_session($sid,'pre_email');
 	$songId = get_from_session($sid,'songId', true);
 }
-include_once('redirector.php');
+
+//include_once('redirector.php');
 
 
 //get the treatment and its properties for the current session
@@ -131,7 +131,7 @@ function next(yesno) {
 
 	post_email = $('#post_email').val();
 
-	window.location = 'endSurvey.php?sendEmail='+sendEmail+'&post_email='+post_email;
+	window.location = 'looper.php?sendEmail='+sendEmail+'&post_email='+post_email;
 }
 
 
@@ -164,7 +164,7 @@ function next(yesno) {
 <table style="width: 1042px; height: 170px;">
 <tr>
 	<td style="background-color: #8a92ef; height: 75px; border-color: black; border-style: solid; border-width: 3px;" valign="middle">
-	<p><span style="font-size: x-large; color: #ffffff;"> Get your song sent to you safely and securely with SafeDelivery</span></p>
+	<p><span style="font-size: x-large; color: #ffffff;"> Get your purchase sent to you safely and securely with SafeDelivery</span></p>
 </td>
 <td rowspan="2" valign="top" style='border:0px'>
 	<img src="./assets/img/woman.jpg" border="0" alt="Woman " title="Woman" width="250" height="198" style="float: right;" />
@@ -174,9 +174,9 @@ function next(yesno) {
 <td style="border-color: black; border-style: solid; border-width: 3px;" valign="top">
 <p><span style="font-size: small;"><strong> SafeDelivery offers you the following services:</strong></span></p>
 <ul>
-	<li>Extra security for your song delivery.</li>
-	<li>An additional way to access your song.</li>
-	<li><span style="text-decoration: underline;">SAVE 50% </span> when your song is delivered by email.</li>
+	<li>Extra security for your media delivery.</li>
+	<li>An additional way to access your media.</li>
+	<li><span style="text-decoration: underline;">SAVE 50% </span> when your media is delivered by email.</li>
 </ul>
 </tr>
 </table>
@@ -222,7 +222,7 @@ function next(yesno) {
 
 		<?php
 
-		$button_text = 'Email song';
+		$button_text = 'Email media';
 
 		if($opt == 'out') {
       	$button_text = 'Remove me from SafeDelivery';
@@ -259,7 +259,7 @@ function next(yesno) {
 <td></td>
 <td valign="top" style='border:solid 3px black;'>
 	<p><span style="font-size: x-small;"><strong>SafeDelivery benefit details:</strong></span></p>
-	<p>SafeDelivery is a trustworthy provider for digital communications and the delivery of digital content. This service is offered by leading online music retailers to ensure that customers get the music they want without problems. There are many benefits of using SafeDelivery.<br /> -If you lose your original copy of the song, you will always have a second copy available.<br /> -You save 50% when ordering the delivery of a copy of your song via SafeDelivery email.<br /> -We guarantee that the emailed copy is exactly similar to the initial selection.<br /> -100 Percent satisfaction guaranteed.</p>
+	<p>SafeDelivery is a trustworthy provider for digital communications and the delivery of digital content. This service is offered by leading online music retailers to ensure that customers get the music they want without problems. There are many benefits of using SafeDelivery.<br /> -If you lose your original copy of the media, you will always have a second copy available.<br /> -You save 50% when ordering the delivery of a copy of your media via SafeDelivery email.<br /> -We guarantee that the emailed copy is exactly similar to the initial selection.<br /> -100 Percent satisfaction guaranteed.</p>
 	<p><span style="font-size: x-small;"><strong>Offer Details:</strong></span></p>
 
 	<?php
@@ -272,7 +272,7 @@ function next(yesno) {
       	$pre_text = 'You have been subscribed to the SafeDelivery service.';
 			$button_text = 'No thanks';
 		}
-		echo "<p>".$pre_text." Simply ".$start_text."click \"$button_text\" to use our services and to take advantage of the great value that SafeDelivery provides. By clicking \"$button_text\" you will receive a safe email copy of the identical song you selected in the WebMed.ia store for just $0.50. This is a 50% DISCOUNT for the additional copy. You will SAVE an incredible $0.50 on this purchase. When you agree to use SafeDelivery you will receive your WebMed.ia selection delivered in a timely manner by email to your account. Your emailed backup copy of the song will help you to have continued access to your song in case of data loss or when you are using different computers. Alternative offers will not give you the same satisfaction or the same $0.50 DISCOUNT. Because of this special reduced offer price we cannot offer any refunds. We always strive to serve our customers to provide them with the quickest and most reliable mode of music delivery. Our customers have the highest degree of satisfaction with SafeDelivery and we invite you to try our offer.</p>";
+		echo "<p>".$pre_text." Simply ".$start_text."click \"$button_text\" to use our services and to take advantage of the great value that SafeDelivery provides. By clicking \"$button_text\" you will receive a safe email copy of the identical item you selected in the WebMed.ia store for just $0.50. This is a 50% DISCOUNT for the additional copy. You will SAVE an incredible $0.50 on this purchase. When you agree to use SafeDelivery you will receive your WebMed.ia selection delivered in a timely manner by email to your account. Your emailed backup copy of the item will help you to have continued access to your media in case of data loss or when you are using different computers. Alternative offers will not give you the same satisfaction or the same $0.50 DISCOUNT. Because of this special reduced offer price we cannot offer any refunds. We always strive to serve our customers to provide them with the quickest and most reliable mode of music delivery. Our customers have the highest degree of satisfaction with SafeDelivery and we invite you to try our offer.</p>";
 
 	?>
 </td>

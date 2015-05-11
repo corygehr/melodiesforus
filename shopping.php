@@ -1,14 +1,25 @@
 <?php
 
 //This is the music shopping page
-
- include_once('redirector.php');
+include_once('functions.php');
+//include_once('redirector.php');
 
 $sid = intval($_COOKIE['sid']);
 $treatment = getTreatmentForSession($sid);
 
 $wt = $treatment['warning_type'];
 $warning_msg = $treatment['warning_msg'];
+
+// Get the media types for this treatment
+$treatment = get_from_session($sid, 'treatment_id');
+
+$db = db_connect();
+
+$q = "SELECT media_type FROM treatment WHERE id = $treatment LIMIT 1";
+
+$result = runQuery($db, $q, true);
+
+$selectedType = $result[0]['media_type'];
  
 ?>
 
@@ -79,9 +90,9 @@ $warning_msg = $treatment['warning_msg'];
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
-	 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
-	 <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
-	 <link rel="shortcut icon" href="./assets/ico/favicon.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="./assets/ico/favicon.png">
   </head>
 
   <body>
@@ -96,6 +107,13 @@ $warning_msg = $treatment['warning_msg'];
 
     <div class="container">
 
+<?php
+	if(isset($_GET['success'])) {
+		$transaction = $_GET['transaction'];
+		echo "<p>Transaction complete! You are now on transaction $transaction.</p>";
+	}
+?>
+
       <!-- Main hero unit for a primary marketing message or call to action -->
 
       <div style='margin-left:-10px;margin-top:-5px' class='row'>
@@ -105,9 +123,7 @@ $warning_msg = $treatment['warning_msg'];
       <div class="row">
 
 <?php 
-		$requestedType = 1;
-
-		$media = get_media_by_type($requestedType);
+		$media = get_media_by_type($selectedType);
 
 		if($media) {
 
@@ -129,9 +145,13 @@ $warning_msg = $treatment['warning_msg'];
 
 				<h6 style='display:none;' class='hiddenMediaArtist'><?php echo $m['name']."<br> by ".$m['author']; ?></h6>
 				<h6 style='display:none' class='hiddenMediaId'><?php echo $m['id']; ?></h6>
-					<div>
-						<?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=100 height=100 />";  ?>
-					</div>
+					<?php
+						if($m['media_type'] != 11) {
+					?>
+					<div><?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=100 height=100 />"; ?></div>
+					<?php
+						}
+					?>
 					<p>
 					<?php
 						switch($m['media_type'])
@@ -140,11 +160,11 @@ $warning_msg = $treatment['warning_msg'];
 								echo "<audio onmousedown='logEvent(\"player".$m['id']."\",\"click\", true)' style='float:right' src='" . $m['path'] . "' controls preload></audio>";
 							break;
 
-							case 2:
-								echo "<video onmousedown='logEvent(\"player".$m['id'].",\"click\", true)' style='float:right' src='" . $m['path'] . "' width='100' height='100' controls></video>";
+							case 11:
+								echo "<video onmousedown='logEvent(\"player".$m['id'].",\"click\", true)' src='" . $m['path'] . "' width='250' height='250' controls></video>";
 							break;
 
-							case 3:
+							case 21:
 								echo "{$m['description']}";
 							break;
 						}
