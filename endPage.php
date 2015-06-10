@@ -7,7 +7,6 @@ include('thankYouPage.php');
 die;  //not really needed, but just here for safety
 
 
-
 function processSurvey() {  
 	$_REQUEST['action'] = 'connect';
 	unset($_REQUEST['action']);
