@@ -69,7 +69,7 @@ $selectedType = $result[0]['media_type'];
 			max-width:170px;
 			padding: 10px;
 			padding-right:15px;
-			border: 3px solid black;
+			border: 3px solid blue;
 		}
 		#warningSpan {
 			display:none;
