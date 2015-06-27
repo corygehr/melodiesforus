@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	
 	// Continues running the experiment until the user has finished the group
 	include('config.php');
 	include('functions.php');
@@ -11,9 +13,25 @@
 	$group = get_from_session($sid, 'group_num');
 	$transaction = get_from_session($sid, 'transaction');
 	$treatment = get_from_session($sid, 'treatment_id');
-	$action = $_GET['sendEmail'];
+	$action = $_GET['sendEmail'];  // based on user choice in purchase.php
+	$mediaId = $_GET['mediaId'];
 	
 	if($action == 'true') {
+		// email needs to be sent
+		// increments media count
+		if (isset($_SESSION['mediaCount'])) {
+			$_SESSION['mediaCount'] += 1;
+		} else {
+			$_SESSION['mediaCount'] = 1;
+		}
+		
+		// adds media id to array
+		if (isset($_SESSION['mediaId'])) {
+			$_SESSION['mediaId'][] = $mediaId;
+		} else {
+			$_SESSION['mediaId'] = array($mediaId);
+		}
+		
 		$action = 1;
 	}
 	else {
@@ -24,6 +42,11 @@
 	$q = "INSERT INTO treatment_selections(sid, treatment_id, action)
 		  VALUES($sid, $treatment, $action)";
 	runQuery($db, $q, false);
+	
+	/*
+		If $action is true, then media id should be added to an array
+		that contains all media to be sent at final transaction 
+	*/ 
 
 	if($transaction == 12) {
 		// Redirect to end survey, we're at the end

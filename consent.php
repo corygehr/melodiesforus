@@ -119,12 +119,22 @@ include_once('redirector.php');
 	}
 	else {
 ?>
-<p>
-	Click 'Start' to begin a new session.
-</p>
-<p>
-	<a id='beginBtn' class='btn btn-primary btn-small' href='./process_consent.php?consent=yes'>Start</a>
-</p>
+	<div class='startButtonCollection'>
+		<p>
+			Enter Participant Group (1-12)
+		</p>
+		<form class='participantGroupForm' action='process_consent.php' method='GET'>
+			<input type='number' name='participant_group' min='1' max='12'>
+			<p>
+				Click 'Start' to begin a new session.
+			</p>
+			<input id='beginBtn' class='btn btn_primary startUp' type='submit' name='consent' value='Start'>
+		</form>
+<!--		
+		<p>
+			<a id='beginBtn' class='btn btn-primary ' href='./process_consent.php?consent=yes'>Start</a>
+		</p>-->
+	</div>
 <?php
 	}
 ?>

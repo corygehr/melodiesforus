@@ -6195,3 +6195,315 @@ a.badge:focus {
 	color: white;
 }   
  
+ 
+ 
+ /*
+  Minimum Content width must be constant 
+  throughout site.
+ */
+ .contentWidth {
+   width: 1200px;
+   margin-bottom: 0;
+ }
+ 
+ 
+/***
+  SHOPPING PAGE 
+  changes by Kaitlyn Dodds
+***/
+
+.shoppingPage {
+  padding-top: 60px;
+  /*padding-bottom: 40px;*/
+}
+
+.shoppingPage__span {
+			border-bottom: 1px solid #eee;
+			max-width:270px;
+      height: 340px;
+			margin-bottom: 5px;
+      padding: 5px 5px 15px 10px;
+}
+
+.shoppingPage_mediaName {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  padding:0;
+}
+
+.shoppingPage_mediaAuthor,
+.shoppingPage_mediaGenre {
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 100;
+  margin: -8px 0 0 10px;
+  padding: 0;
+}
+
+.shoppingPage_mediaGenre {
+  margin: -3px 0 5px 0;
+  font-style: normal;
+  font-weight: bold;
+}
+
+#shoppingContentWrapper {
+    width: 75%; 
+	  padding: 10px;
+    border: 3px solid black;
+}
+
+.shoppingPage_cartSpan,
+#shoppingPage_warningSpan {
+			/*height: 164px;*/
+      height: 250px;
+			max-width:170px;
+			padding: 10px;
+			padding-right:15px;
+}
+
+.shoppingPage_cartSpanBorder {
+			border: 3px solid black;
+}
+
+#shoppingPage_warningSpan {
+			display:none;
+}
+    
+#shoppingPage_cartMediaArea {
+			min-height: 180px;
+      max-height: 180px;
+      max-width: 170px;
+			padding: 10px; 
+}
+
+.shoppingPage_mediaDescription {
+  font-size: 10px;
+  height: 235px;
+}
+
+.shoppingPage_mediaSong {
+  margin: 70px 0 20px;
+  max-width: 100%;
+  float: right;
+}
+
+.shoppingPage_CartHeading {
+  margin: -20px 0 0 -10px; 
+}
+
+#cart_title {
+  font-weight: 700;
+}
+
+#cart_artist {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.shoppingPage_transactionInfo {
+  padding: 3px 5px 0 10px
+}
+		
+.shoppingPage_transactionHeading {
+		font-size: 15px;
+		font-weight: bold;
+}
+
+.shoppingPage_AddToCartButton {
+  margin: 2px 0 0 0;
+  float: right;
+}
+
+.shoppingPage_displayMediaInfo {
+  max-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.shoppingPage_mediaGraphic {
+  margin: 0;
+}
+
+.shoppingPage_userBank {
+  padding: 5px 5px;
+  margin: 2px 0 10px 20px;
+  display: inline-block;
+  width: 190px;
+  text-align: center;
+  font-weight: 100;
+  font-size: 13px;
+  background: #00B4CC;
+  color: #1a1a1a;
+  border: 1px solid black;
+}
+
+
+/*
+
+  SHOPPING Page SecondStage
+
+*/
+
+#secondStage {
+  margin: 0 auto;
+  width: 900px;
+}
+
+
+
+
+/***
+  PURCHASE PAGE 
+  changes by Kaitlyn Dodds
+***/
+
+.purchasePage_Container {
+  width: 1050px;
+  margin: 10px auto;
+  padding: 0;
+}
+
+.purchasePage_orderConf {
+  font-weight: bold;
+  line-height: 1.3em;
+  font-size: 18px;
+}
+
+.purchasePage_orderConf span {
+  font-size: 24px;
+}
+
+.purchasePage_SafeDeliveryDiv {
+  margin: 0 0 10px 2px;
+  width: 100%;
+  border: solid 2px black;
+}
+
+.safeDelivery_heading {
+  padding: 20px 15px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 100;
+  color: #fff;
+  background-color: #8a92ef;
+  border-bottom: 1px solid black;
+}
+
+.safeDelivery_Info {
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.safeDelivery_Info img {
+  box-shadow: 0px 1px 6px black;
+}
+
+.safeDelivery_servicesHeading {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.safeDelivery_services li {
+  font-size: 15px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+}
+
+.purchasePage_emailAndConditionsDiv {
+  width: 100%;
+  margin-left: 2px; 
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  /*border: solid 2px green;*/
+}
+
+.emailAndConditionsDiv_leftSide {
+  margin: 10px 10px 0 0;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space_between;
+}
+
+.leftSide_topContainer {
+  margin: 0;
+  padding: 15px;
+  border: solid 2px black;
+}
+
+.leftSide_currentSafeDeliverySettings {
+  margin-bottom: 10px;
+}
+
+.leftSide_emailValidationForm {
+  margin-top: 30px;
+}
+
+.leftSide_UserBank {
+  margin: 15px 0;
+  padding: 5px 15px;
+  text-align: center;
+  font-weight: 100;
+  font-size: 13px;
+  color: #fff;
+  background: #8a92ef;
+  border: 2px solid black;
+} 
+
+.emailAndConditionsDiv_rightSide {
+  margin: 10px -3px 0 0;
+  padding: 15px;
+  border: solid 2px black;
+}
+
+.emailAndConditionsDiv_rightSide ul {
+  margin-bottom:20px;
+}
+
+
+/*
+
+START PAGE
+
+*/
+
+.startButtonCollection {
+  width: 30%;
+  margin: 150px auto;
+  padding: 80px 120px;
+  text-align: center;
+  border: 2px solid black;
+}
+
+.startButtonCollection p {
+  font-size: 15px;
+  width: 100%;
+}
+
+.startButtonCollection p a {
+  height: 30px;
+  width: 90%;
+  font-size: 20px;
+  margin: 10px auto;
+  line-height: 30px;
+}
+
+.participantGroupForm input {
+  width: 100%;
+  height: 25px;
+  margin: 5px 0 20px;
+}
+
+.startUp {
+  min-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  background: #006dcc;
+}

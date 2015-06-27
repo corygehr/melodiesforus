@@ -1,3 +1,10 @@
+<!--
+	
+	Meet TODO
+		Make all content same width
+		set up sessions
+-->
+
 <?php
 
 //This is the music shopping page
@@ -11,10 +18,13 @@ $wt = $treatment['warning_type'];
 $warning_msg = $treatment['warning_msg'];
 
 // Get the media types for this treatment
+// TODO: Get media type based on participant group
 $treatment = get_from_session($sid, 'treatment_id');
 
 $db = db_connect();
 
+// Gets the media type based on treatment
+// $q = "SELECT media_" 
 $q = "SELECT media_type FROM treatment WHERE id = $treatment LIMIT 1";
 
 $result = runQuery($db, $q, true);
@@ -34,52 +44,30 @@ $selectedType = $result[0]['media_type'];
     <meta name="author" content="">
     <script src="./assets/js/jquery.js"></script>
     <script src="./eventRecorder.js"></script>
-	 <script type="text/javascript" src="./survey/js/jquery.validate.js"></script>
+	<script type="text/javascript" src="./survey/js/jquery.validate.js"></script>
 
 	 <script>
 	 $(document).ready(function() {
 		 $('.addToCart').click(function(e) {
-			 var song = $(this).closest("div").find(".hiddenMediaArtist").html();
+			 var song = $(this).closest("div").find(".hiddenMediaTitle").html();
+			 var artist = $(this).closest("div").find(".hiddenMediaArtist").html();
 			 var songId = $(this).closest("div").find(".hiddenMediaId").text();
-			 $('#cart').html(song+": $0.99");
+			 $('#cart_title').html(song);
+			 if (typeof artist === 'undefined') {
+				 $('#cart_artist').html('by ' + artist);
+			 }
 			 $('#songId').val(songId);
 		 });
+		 
+		 $('#clearCartBtn').click(function(e) {
+			 $('#cart_title').html('');
+			 $('#cart_artist').html('');
+			 $('#cart_price').html('');
+		 });
+		 
 	 });
 
 	 </script>
-
-    <link href="./assets/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-		.span4 {
-			border-top: 1px solid #eee;
-			border-bottom: 1px solid #eee;
-			max-width:300px;
-			margin-left:-10px;
-		}
-		#bigGroup {
-			border: 3px solid black;
-			padding: 5px;
-		}
-		#cartSpan, #warningSpan {
-			height: 164px;
-			max-width:170px;
-			padding: 10px;
-			padding-right:15px;
-			border: 3px solid blue;
-		}
-		#warningSpan {
-			display:none;
-		}
-		#cartMediaArea {
-			height: 100px;
-         max-width:170px;
-			padding: 10px; 
-		}
-    </style>
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -95,7 +83,7 @@ $selectedType = $result[0]['media_type'];
 	<link rel="shortcut icon" href="./assets/ico/favicon.png">
   </head>
 
-  <body>
+  <body class="shoppingPage">
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -105,22 +93,17 @@ $selectedType = $result[0]['media_type'];
       </div>
     </div>
 
-    <div class="container">
+    <div class="container contentWidth">
 
-<?php
-	if(isset($_GET['success'])) {
-		$transaction = $_GET['transaction'];
-		echo "<p>Transaction complete! You are now on transaction $transaction.</p>";
-	}
-?>
+<!--Transaction-->
 
       <!-- Main hero unit for a primary marketing message or call to action -->
 
-      <div style='margin-left:-10px;margin-top:-5px' class='row'>
+      <div  class='row'>
 
-      <div id='bigGroup' class='span13' style='margin-right:-10px'>
+      <div id='shoppingContentWrapper' class='span13'>
 
-      <div class="row">
+      	<div class="row">
 
 <?php 
 		$media = get_media_by_type($selectedType);
@@ -130,48 +113,84 @@ $selectedType = $result[0]['media_type'];
 			$count=1;
 
 			foreach($media as $m) { 
-
-				if($count>1 && ($count-1)%2 == 0) {
+				// Change module to change media display 
+				if($count>1 && ($count-1)%3 == 0) {
 		  			echo "</div><div class='row'>";
 		  		}
 ?>
 		  
-		  
-		  <div class="span4" style='padding-top:5px;padding-bottom:10px;padding-left:5px;'>
-          <h3 style='margin-top:-13px;'><?php echo $m['name']; ?></h3>
-			 <h4 style='margin-top:-8px;'><i> by <?php echo $m['author']; ?></i>
-			   <span style='font-size:12px'>(<?php echo $m['genre']; ?>)</span>
-				</h4>
-
-				<h6 style='display:none;' class='hiddenMediaArtist'><?php echo $m['name']."<br> by ".$m['author']; ?></h6>
-				<h6 style='display:none' class='hiddenMediaId'><?php echo $m['id']; ?></h6>
+		  <div class='shoppingPage__span' >
+			  <div class='shoppingPage_displayMediaInfo'>
+				  <div class='shoppingPage_mediaInfo'>
+				  <!--Info about media author, genre, etc.-->
+			        <h3 class='shoppingPage_mediaName'><?php echo $m['name']; ?></h3>
+					<!--If there is an author, show author-->
 					<?php
-						if($m['media_type'] != 11) {
+						if (strlen($m['author']) > 0) {
 					?>
-					<div><?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=100 height=100 />"; ?></div>
+							<h4 class='shoppingPage_mediaAuthor'>by <?php echo $m['author']; ?></h4>
 					<?php
 						}
 					?>
-					<p>
+					<!--If there is a genre to show, shows genre-->
+					<?php 
+					   if(strlen($m['genre']) > 0) {
+					?>
+							<h4 class='shoppingPage_mediaGenre'>Genre: <?php echo $m['genre']; ?></h4>
+					<?php 
+					   }
+					?>
+				</div>
+				<div class='shoppingPage_mediaGraphic'>
+					<!--Displays users media choice in cart-->
+					<p style='display:none;' class='hiddenMediaTitle'><?php echo $m['name']."<br>"; ?></p>
+					<p style='display:none;' class='hiddenMediaArtist'><?php echo $m['author']."<br>"; ?></p>
+					<p style='display:none;' class='hiddenMediaId'><?php echo $m['id']; ?></p>
+					<!--Displays media graphic-->
+					<!--If the media graphic is of media type 1 (music), set graphic size to 100x100-->
 					<?php
-						switch($m['media_type'])
-						{
-							case 1:
-								echo "<audio onmousedown='logEvent(\"player".$m['id']."\",\"click\", true)' style='float:right' src='" . $m['path'] . "' controls preload></audio>";
-							break;
-
-							case 11:
+						if($m['media_type'] == 1) {
+					?>
+							<div><?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=100 height=100 />"; ?></div>
+					<?php
+						}
+					?>
+					<!--If media type is of type 21 (ebook), set graphic size to 50x50-->
+					<?php 
+						if($m['media_type'] == 21) {
+					?>
+							<div><?php echo "<img style='float:left' src='". $m['cover_path'] . "' width=50 height=50 />"; ?></div>
+					<?php
+						}
+					?>
+				</div>
+			</div>		
+				<?php
+					switch($m['media_type']) {
+						// Media type is a song 
+						case 1:
+							echo "<div class='shoppingPage_mediaSong'>";
+								echo "<audio class='shoppingPage_mediaSong' onmousedown='logEvent(\"player".$m['id']."\",\"click\", true)' src='" . $m['path'] . "' controls preload></audio>";
+							echo "</div>";
+						break;
+						
+						// Media type is a video 
+						case 11:
+							echo "<div >";
 								echo "<video onmousedown='logEvent(\"player".$m['id'].",\"click\", true)' src='" . $m['path'] . "' width='250' height='250' controls></video>";
-							break;
-
-							case 21:
+							echo "</div>";
+						break;
+		
+						// Media type is ebook 
+						case 21:
+							echo "<p class='shoppingPage_mediaDescription'>";
 								echo "{$m['description']}";
-							break;
-						}
-					?>
-					</p>
-					<br/>
-          <a class="btn addToCart" style='margin-top:20px;float:right' id='addToCartBtn<?php echo $m['id']; ?>'href="#">Add to cart ($0.99) &raquo;</a>
+							echo "</p>";
+						break;
+					}
+				?>
+			<br/>
+			<a class="btn addToCart shoppingPage_AddToCartButton" id='addToCartBtn'<?php echo $m['id']; ?>'href="#">Add to cart ($0.99) &raquo;</a>
         </div>
 		  
 		  <?php
@@ -182,6 +201,7 @@ $selectedType = $result[0]['media_type'];
 		  ?>
 		</div> <!--last media block -->
 
+<!--Beginning of User Purchase form-->
 		<script>
 			$(document).ready(function(){
 				$("#purchaseForm").validate({
@@ -212,32 +232,30 @@ $selectedType = $result[0]['media_type'];
 		.input-block-level { clear:none; }
 		.error { display:inline; padding-left:5px; color:red }
 		</style>
-
+<!--Displays user purchase form-->
       <div id='secondStage' class='row' style='display:none'>
 			<div class='span8'>
-				<div name='extraInfoContent' style='padding-left:20px;max-width:600px'> 
+				<div name='extraInfoContent' > 
 					<h4 style='text-decoration:underline'>Please enter the following information to complete your purchase:</h4>
 					<div class='errorMsgTop'></div>
 
 					<form id='purchaseForm' action='purchase.php' method='POST'>
 					<div>
-<?php
-	// Ask for mturk id if we're using it
-	if(USE_MTURK == true)
-	{
-		echo "
-						<input type='text' required placeholder='Mechanical Turk ID' name='pre_mturk_id' />
-						<br/>";
-	}
-?>
+						<?php
+							// Ask for mturk id if we're using it
+							if(USE_MTURK == true)
+							{
+								echo "<input type='text' required placeholder='Mechanical Turk ID' name='pre_mturk_id' /><br/>";
+							}
+						?>
 						<input type='text' required placeholder='Age' name='pre_age' />
 						<br/>
 						<input type='text' required placeholder='Zip Code' name='pre_zip' />
 						<br/>
 						<input type='text' required placeholder='Email' name='pre_email' />
 						<br/>
-         			<input type="hidden" id='songId' name="songId" value="" />
-					</div>
+	         			<input type="hidden" id='songId' name="songId" value="" />
+						</div>
 
 					<br/><br/>
 					
@@ -252,34 +270,53 @@ $selectedType = $result[0]['media_type'];
 
 			</div>
 		</div>
-
-
-
       </div> <!-- big group of songs -->
 
 
-		<div id='rightSide' class='span3'>
+		<div id='rightSide' class='span3' style='float: right'>
 			<div class='row'>
-				<div id='cartSpan' class='span3'>
+				<!--Displays users bank-->
+				<h4 class='shoppingPage_userBank'>User Bank: $1.50</h4>
+				<!--Shopping Cart-->
+				<div class='shoppingPage_cartSpan span3 shoppingPage_cartSpanBorder'>
 					<div class='row'>
-						<div class="span3" id='cartMediaArea'>
-							<h3 style='margin-top:-20px;margin-left:-10px'>Cart:</h3>
-							<p id='cart'></p> <!-- This is where the song goes -->
+						<div class="span3" id='shoppingPage_cartMediaArea'>
+							<h3 class='shoppingPage_CartHeading'>Cart:</h3>
+							<p id='cart_title'>
+								<!-- Info about song user chooses will appear here -->
+							</p>
+							<p id='cart_artist'>
+								<!--Info about artist will appear here-->
+							</p>
 						</div>
 					</div>
-
-					<div class='row'>
+					
+					<!--Within Cart div, 'purchase' and 'clear cart' buttons-->
+					<div class='row shoppingPage_BtnCart'>
 						<div class="span3" id='cartBtnArea'>
 							<a class="btn" href="#" id='purchaseBtn' onclick='doPurchase();'>Purchase</a>
-							<a class="btn" href="#" id='clearCartBtn' onclick="$('#cart').html('');">Clear cart</a>
+							<a class="btn" href="#" id='clearCartBtn'>Clear cart</a>
 						</div>
 					</div>
 											
 				</div>
+				
+				<!--Moved transaction information here to save space-->
+				<div class='shoppingPage_cartSpan span3' >
+					<!--Displays which transaction the user is on-->
+						<?php
+							if(isset($_GET['success'])) {
+								$transaction = $_GET['transaction'];
+								echo "<span class='shoppingPage_transactionHeading'>Transaction Complete!</span>";
+								echo "<p class='shoppingPage_transactionInfo'>Now on Transaction: <strong style='font-size: 15px'>$transaction</strong></p>";
+							}
+						?>
+				</div>
+				
 			</div> <!-- cart row -->
 
 			<div class='row' style='margin-top:10px'>
-				<div id='warningSpan' class='span3'>
+				<div id='shoppingPage_warningSpan shoppingPage_cartSpanBorder' class='span3'>
 					<div class='row'>
 						<div style='width: 160px;' class="span2">
 							<p id='warning'></p> 
@@ -296,8 +333,9 @@ $selectedType = $result[0]['media_type'];
 		 <script>
 		 function doPurchase() {
 			 var cart = $('#cart').html();
-			 if(cart == '') {
-          	alert('You must add an item to your cart.');
+			 var cartSong = $('#cart_title').html();
+			 if(typeof cartSong == 'undefined') {
+          		alert('You must add an item to your cart.');
 				return false;
 			 }
 			 logEvent('purchaseBtn', 'click+success', true);
@@ -306,7 +344,7 @@ $selectedType = $result[0]['media_type'];
 		 }
 
 		 function insertPurchaseScreen() {
-			$('#bigGroup .row:not(#secondStage)').hide();
+			$('#shoppingContentWrapper .row:not(#secondStage)').hide();
 			$('#cartBtnArea').html("---------------------------------<br/>Total: $0.99");
 			$('#cartBtnArea').css('align','right');
 
@@ -317,7 +355,7 @@ $selectedType = $result[0]['media_type'];
 
          <?php
 			if($wt == 'checkout') {
-         	echo "$('#warningSpan').show();";
+         	echo "$('#shoppingPage_warningSpan').show();";
 				echo "$('#warning').html('$warning_msg');";
 			}
 
