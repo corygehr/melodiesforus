@@ -35,11 +35,24 @@ else {
 $treatment = getTreatmentForSession($sid);
 
 $box_value = '';
-$prepop = $treatment['pre-pop'];
-$opt = $treatment['opt'];
-if(substr($prepop, 0, 3) == 'yes'){
+
+// TODO: get $opt and $prepop based on code
+$group_code = $_SESSION['group_code'];
+// get $opt from code
+$opt = getOptionFromCode($group_code);
+
+// get prepop from code 
+$prepop = getPrepopFromCode($group_code);
+
+if ($prepop == 'fill') {
 	$box_value = htmlentities($email, ENT_QUOTES);
 }
+
+// $prepop = $treatment['pre-pop'];
+// $opt = $treatment['opt'];
+// if(substr($prepop, 0, 3) == 'yes'){
+// 	$box_value = htmlentities($email, ENT_QUOTES);
+// }
 
 $box_display = 'block';
 $box_hidden = false;
@@ -145,7 +158,9 @@ if($wt != 'checkout' && $wt != 'none')  {
 <iframe width=1 height=1 style='display:none' src='<?php echo $mediaPath; ?>'></iframe>
 
   <body>
-
+	  <p>Code: <?php echo $group_code ?></p>
+	  <p>Option: <?php echo $opt ?></p>
+	  <p>Pre: <?php echo $prepop ?></p>
     <div class="purchasePage_Container">
 	 		<div class='row'>
 	 			<div class='span13'>

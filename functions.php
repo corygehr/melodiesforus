@@ -95,10 +95,12 @@ function enter_new_session($param_hitId, $param_workerId) {
 	}
 
 	// Get the desired group number
-	$q = "SELECT value FROM settings WHERE name = 'CURRENT_GROUP' LIMIT 1";
+	$q = "SELECT value FROM settings WHERE name = 'CURRENT_GROUP' LIMIT 1"; // returns 1 always
 	$result = runQuery($db, $q, true);
+	
+	// Replace above w/ user entered group_num
 
-	$group = $result[0]['value'];
+	$group = $result[0]['value']; // 1
 
 	// Now get the first treatment ID for that group
 	$q = "SELECT id FROM treatment WHERE group_num = $group AND sequence = 1 LIMIT 1";
@@ -375,7 +377,66 @@ function get_last_page($sid) {
 	return 'undef';
 }
 
+/*
+	New functions!
+*/ 
+
+ function getTransactionForSession($sid) {
+	 // returns what transaction the user is on (1-12)
+	 $db = db_connect();
+	 $sid = intval($sid);
+	 $sql = "SELECT transaction FROM session WHERE id=$sid";
+	 $data = runQuery($db, $sql, true);
+	 $transaction = $data[0]['transaction'];
+	 return $transaction; 
+ }
  
+ function getParticipantGroupCode($participant_group, $trans) {
+	 // returns code corresponding to transaction for the participant group
+	 $db = db_connect();
+	 
+	 $group = "group_".$participant_group;
+	 
+	 $sql = "SELECT $group FROM participant_groups WHERE transaction_num=$trans";
+	 $data = runQuery($db, $sql, true);
+	 
+	 $code = $data[0][$group];
+	 return $code;
+ }
+ 
+ function getMediaTypeFromCode($code) {
+	 // returns media type based on code
+	 $db = db_connect();
+	 
+	 $sql = "SELECT media_type FROM group_code_key WHERE key_code='$code'";
+	 $data = runQuery($db, $sql, true);
+	 
+	 $media_type = $data[0]['media_type'];
+	 return $media_type;
+ }
+ 
+ function getOptionFromCode($code) {
+	 // returns 'in' or 'out' based on code
+	 $db = db_connect();
+	 
+	 $sql = "SELECT option_in_out FROM group_code_key WHERE key_code='$code'";
+	 $data = runQuery($db, $sql, true);
+	 
+	 $option = $data[0]['option_in_out'];
+	 return $option;
+	 
+ }
+ 
+ function getPrepopFromCode($code) {
+	 // returns 'fill' or 'blank' based on code
+	 $db = db_connect();
+	 
+	 $sql = "SELECT field_fill_blank FROM group_code_key WHERE key_code='$code'";
+	 $data = runQuery($db, $sql, true);
+	 
+	 $prepop = $data[0]['field_fill_blank'];
+	 return $prepop;
+ }
 
 function getTreatmentForSession($sid) {
 	$db = db_connect();
