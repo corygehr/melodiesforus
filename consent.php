@@ -130,10 +130,6 @@ include_once('redirector.php');
 			</p>
 			<input id='beginBtn' class='btn btn_primary startUp' type='submit' name='consent' value='Start'>
 		</form>
-<!--		
-		<p>
-			<a id='beginBtn' class='btn btn-primary ' href='./process_consent.php?consent=yes'>Start</a>
-		</p>-->
 	</div>
 <?php
 	}

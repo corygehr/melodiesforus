@@ -187,7 +187,7 @@ function edit_session($data, $ignoreOtherData, $prepost) {
 	$sid = intval($_COOKIE['sid']);
 	$sql = "UPDATE session SET $fields_str WHERE id=:sid";
 
-   $prep = $db->prepare($sql);
+    $prep = $db->prepare($sql);
 
 	$prep->bindParam(':sid', $sid);
 
@@ -196,6 +196,20 @@ function edit_session($data, $ignoreOtherData, $prepost) {
 	}
 
 	$prep->execute();
+}
+
+function setSessionGroup($group) {
+	$db = db_connect();
+	
+	$sid = intval($_COOKIE['sid']);
+	$sql = "UPDATE session SET group_num=$group WHERE id=:sid";
+	
+	$prep = $db->prepare($sql);
+
+	$prep->bindParam(':sid', $sid);
+
+	$prep->execute();
+	
 }
 
 // "cheaters" are people that try to change their post-transaction offer response
@@ -389,6 +403,15 @@ function get_last_page($sid) {
 	 $data = runQuery($db, $sql, true);
 	 $transaction = $data[0]['transaction'];
 	 return $transaction; 
+ }
+ 
+ function getParticipantGroupForSession($sid) {
+	 $db = db_connect();
+	 $sid = intval($sid);
+	 $sql = "SELECT group_num FROM session WHERE id=$sid";
+	 $data = runQuery($db, $sql, true);
+	 $group = $data[0]['group_num'];
+	 return $group; 
  }
  
  function getParticipantGroupCode($participant_group, $trans) {

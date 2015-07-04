@@ -54,14 +54,17 @@
 		die;
 	}
 	else {
-		// Get the ID of the next item in the sequence (transaction)
+		// increments transaction 
 		$newSeq = $transaction+1;
-		$q = "SELECT id FROM treatment WHERE sequence = $newSeq AND group_num = $group LIMIT 1";
-		$result = runQuery($db, $q, true);
+		
+		// Get the ID of the next item in the sequence (transaction)
+		// $q = "SELECT id FROM treatment WHERE sequence = $newSeq AND group_num = $group LIMIT 1";
+		// $result = runQuery($db, $q, true);
 
-		$newTreatment = $result[0]['id'];
+		// $newTreatment = $result[0]['id'];
 
-		edit_session(array('treatment_id' => $newTreatment, 'transaction' => $newSeq), true, 'override');
+		// updates transaction num for session
+		edit_session(array('transaction' => $newSeq), true, 'override');
 
 		// Redirect back to shopping
 		header('Location: shopping.php?success&transaction='.$newSeq);

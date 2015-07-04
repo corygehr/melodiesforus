@@ -1,20 +1,16 @@
 <?php
-//This is the music shopping page
-include_once('functions.php');
+//This is the media shopping page
 
+include_once('functions.php');
+session_start();
 //include_once('redirector.php');
 
-session_start();
-
-/*
-	TODO: Get code based on transaction num and prev entered group_#
-	Get media_type, option, and fill/blank based on code 
-*/
 // get session
 $sid = intval($_COOKIE['sid']);
 
 // get entered part_group
-$participant_group = $_SESSION['participant_group'];
+$participant_group = getParticipantGroupForSession($sid);
+
 $group = 'group_'.$participant_group;
 
 // get code based on group and transaction num (get trans_num where id = )
@@ -25,30 +21,6 @@ $_SESSION['group_code'] = $code;
 // Get media type from code
 $selectedType = getMediaTypeFromCode($code);
 
-
-
-
-// OLD CODE  
- 
-$treatment = getTreatmentForSession($sid);
-
-$wt = $treatment['warning_type'];
-$warning_msg = $treatment['warning_msg'];
-
-/*
-// Get the media types for this treatment
-$treatment = get_from_session($sid, 'treatment_id');
-
-$db = db_connect();
-
-// Gets the media type based on treatment
-$q = "SELECT media_type FROM treatment WHERE id = $treatment LIMIT 1";
-
-$result = runQuery($db, $q, true);
-
-$selectedType = $result[0]['media_type'];
-// OLD CODE
-*/
 ?>
 
 
@@ -71,7 +43,7 @@ $selectedType = $result[0]['media_type'];
 			 var artist = $(this).closest("div").find(".hiddenMediaArtist").html();
 			 var songId = $(this).closest("div").find(".hiddenMediaId").text();
 			 $('#cart_title').html(song);
-			 if (typeof artist === 'undefined') {
+			 if (artist.length > 0) {
 				 $('#cart_artist').html('by ' + artist);
 			 }
 			 $('#songId').val(songId);
@@ -111,10 +83,10 @@ $selectedType = $result[0]['media_type'];
       </div>
     </div>
 	
-	<p>Group Num: <?php echo $group ?></p>
+	<!--<p>Group Num: <?php echo $group ?></p>
 	<p>Trans Num: <?php echo $transaction_num ?></p>
 	<p>Code: <?php echo $code ?></p>
-	<p>Media Type: <?php echo $selectedType ?></p>
+	<p>Media Type: <?php echo $selectedType ?></p>-->
 
     <div class="container contentWidth">
 
@@ -338,21 +310,6 @@ $selectedType = $result[0]['media_type'];
 				
 			</div> <!-- cart row -->
 
-			<div class='row' style='margin-top:10px'>
-				<div id='shoppingPage_warningSpan shoppingPage_cartSpanBorder' class='span3'>
-					<div class='row'>
-						<div style='width: 160px;' class="span2">
-							<p id='warning'></p> 
-						</div>
-					</div>
-				</div>                           
-
-			<div class='row'>
-				<div class="span3" id='cartSecurityArea'>
-				</div>
-			</div>    
-		</div>  <!-- right side -->
-
 		 <script>
 		 function doPurchase() {
 			 var cart = $('#cart').html();
@@ -371,18 +328,9 @@ $selectedType = $result[0]['media_type'];
 			$('#cartBtnArea').html("---------------------------------<br/>Total: $0.99");
 			$('#cartBtnArea').css('align','right');
 
-
 			logEvent('secondStage', 'show');
 
 			$('#secondStage').show();
-
-         <?php
-			if($wt == 'checkout') {
-         	echo "$('#shoppingPage_warningSpan').show();";
-				echo "$('#warning').html('$warning_msg');";
-			}
-
-			?>
 		 }
 
 		 </script>
