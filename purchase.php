@@ -133,7 +133,7 @@ if($wt != 'checkout' && $wt != 'none')  {
 		}
 	
 		post_email = $('#post_email').val();
-	
+		// alert("Send = " + sendEmail + "\nMedia Id = " + mediaId);
 		window.location = 'looper.php?sendEmail=' + sendEmail + '&post_email=' + post_email + '&mediaId='+ mediaId;
 	}
 </script>

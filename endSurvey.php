@@ -10,24 +10,30 @@ if(array_key_exists('prevPage', $_REQUEST) && $_REQUEST['prevPage'] == 'survey')
 	die;
 }
 
-// EMAIL
-echo $_SESSION['mediaCount']."<br>";
-foreach($_SESSION['mediaId'] as $id => $mediaId) {
-		echo $id." = ".$mediaId."<br>";
-}
-
-$mediaCount = $_SESSION['mediaCount'];
-$mediaToSend = $_SESSION['mediaId'];
-
 $sid = intval($_COOKIE['sid']); //for security
 $email_sent = false;
 
+// EMAIL
+// echo $_SESSION['mediaCount']."<br>";
+if ( isset($_SESSION['mediaId']) ) {
+	 // TRACE 
+	foreach($_SESSION['mediaId'] as $id => $mediaId) {
+			echo $id." = ".$mediaId."<br>";
+	}
+	
+	$mediaToSend = $_SESSION['mediaId'];
 
-if ($mediaCount > 0) {
-	// there are some emails that need to be sent
-	echo "need to send emails";
-	sendEmail();
+	if (count($mediaToSend) > 0) {
+		// there are some emails that need to be sent
+		echo "need to send ".count($mediaToSend)." emails</br>";
+		sendEmail();
+	} else {
+		// TRACE
+		echo "No messages to send</br>";
+	}
 }
+
+
 
 // This wont work, need to check if user wanted any emails sent, not just last transaction
 // if(array_key_exists('sendEmail', $_GET)) {
@@ -70,13 +76,13 @@ function sendEmail() {
 	
 	//tis avoid duplicates being sent when someone reloads the page
 	foreach($_SESSION['mediaId'] as $id => $mediaId) {
-		echo "Sending ".$id." ".$mediaId;
+		
 		if(!has_seen_negative_option($sid)) { 
-				include('PHPMailer/mailer.php');
+			echo "Sending ".$mediaId."</br>";
+			include('PHPMailer/mailer.php');
 		} 
 	}
-	
-	unset($_SESSION['mediaCount']);
+
 	unset($_SESSION['mediaId']);
 	
 }

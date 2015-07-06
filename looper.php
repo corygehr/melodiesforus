@@ -18,12 +18,6 @@
 	
 	if($action == 'true') {
 		// email needs to be sent
-		// increments media count
-		if (isset($_SESSION['mediaCount'])) {
-			$_SESSION['mediaCount'] += 1;
-		} else {
-			$_SESSION['mediaCount'] = 1;
-		}
 		
 		// adds media id to array
 		if (isset($_SESSION['mediaId'])) {

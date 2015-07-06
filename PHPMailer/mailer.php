@@ -14,8 +14,10 @@ if(!isset($to))
 // 	$songId=2;
 
 // TODO: get path for media based on mediaId
-//$attachment = "songs/$songId.zip"; 
-$attachment = " ";
+// need to use $mediaId
+$mediaInfo= get_media_path($mediaId);
+$mediaPath = $mediaInfo[0]['path'];
+$attachment = $mediaPath;
 
 $mail = new PHPMailer();
 $mail->isSMTP();
